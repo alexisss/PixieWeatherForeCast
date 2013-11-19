@@ -1,0 +1,131 @@
+﻿@using WeatherForecast.Mvc.Models;
+@{
+    ViewBag.Title = "Home Page";
+}
+@section JavaScript
+{
+    <script type="text/javascript" src="@Url.Content("/Scripts/HomeScripts.js")"></script>
+}
+
+<div class="areas-towns-dropdown" style="width: 250px;">
+    @RenderPage("../Shared/_DropDownAreasTowns.cshtml")
+        @(Html.Kendo().TabStrip()
+        .Name("tab-strip")
+        .SelectedIndex(0)
+         .Events(e => e
+                    .Select("selectedTownId"))
+                .HtmlAttributes(new { style = "width:500px" })
+        .Items(items =>
+        {
+
+            items.Add().Text(DateTime.Now.DayOfWeek.ToString()).Selected(true).Content(@<text>
+    @(Html.Kendo().Grid<ForecastGridViewModel>()
+        .Name("sample-forecast-grid")
+        .Columns(columns =>
+        {
+            columns.Bound(x => x.TownId).Hidden();
+            columns.Bound(x => x.Name).Filterable(false).Width(100);
+            columns.Bound(x => x.Weatherman);
+        })
+
+        .Pageable(page =>
+            {
+                page.PreviousNext(true);
+                page.Numeric(true);
+            })
+        .Sortable(sort =>
+            {
+                sort.AllowUnsort(false);
+                sort.SortMode(GridSortMode.SingleColumn);
+            })
+        .Scrollable()
+        .Filterable()
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .Model(m => m.Id(b => b.TownId))
+            .PageSize(10)
+            .Read(read => read.Action("ReadForecasts", "Home").Data("selectedTownId"))
+         ))
+        </text>);
+            items.Add().Text((DateTime.Now.DayOfWeek + 1).ToString()).Content(@<text>
+    @(Html.Kendo().Grid<ForecastGridViewModel>()
+        .Name("sample-forecast-grid2")
+        .Columns(columns =>
+        {
+            columns.Bound(x => x.TownId).Hidden();
+            columns.Bound(x => x.Name).Filterable(false).Width(100);
+            columns.Bound(x => x.Weatherman);
+        })
+
+        .Pageable(page =>
+            {
+                page.PreviousNext(true);
+                page.Numeric(true);
+            })
+        .Sortable(sort =>
+            {
+                sort.AllowUnsort(false);
+                sort.SortMode(GridSortMode.SingleColumn);
+            })
+        .Scrollable()
+        .Filterable()
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .Model(m => m.Id(b => b.TownId))
+            .PageSize(10)
+                                    .Read(read => read.Action("ReadForecasts", "Home").Data("selectedTownIdTomorrow"))
+         ))
+        </text>);
+            items.Add().Text((DateTime.Now.DayOfWeek + 2).ToString()).Content(@<text>
+    @(Html.Kendo().Grid<ForecastGridViewModel>()
+        .Name("sample-forecast-grid3")
+        .Columns(columns =>
+        {
+            columns.Bound(x => x.TownId).Hidden();
+            columns.Bound(x => x.Name).Filterable(false).Width(100);
+            columns.Bound(x => x.Weatherman);
+        })
+
+        .Pageable(page =>
+            {
+                page.PreviousNext(true);
+                page.Numeric(true);
+            })
+        .Sortable(sort =>
+            {
+                sort.AllowUnsort(false);
+                sort.SortMode(GridSortMode.SingleColumn);
+            })
+        .Scrollable()
+        .Filterable()
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .Model(m => m.Id(b => b.TownId))
+            .PageSize(10)
+                .Read(read => read.Action("ReadForecasts", "Home").Data("selectedTownIdDayAfterTomorrow"))
+         ))
+        </text>);
+        })
+        
+        )
+    </div>
+    <div >
+        <form action="../../Authors/AllAuthors" method="get" >
+            <input class="btn" type="submit" value="See all authors..."
+                   name="Submit" />
+        </form>
+    </div>
+<style scoped>
+    .areas-towns-dropdown {
+        width: 460px;
+        padding: 30px;
+    }
+
+        .areas-towns-dropdown .k-button {
+            margin: 20px 0 0 125px;
+        }
+
+    .k-readonly {
+        color: gray;
+    }
+</style>

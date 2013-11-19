@@ -1,0 +1,10 @@
+﻿
+@(Html.Kendo()
+        .Upload()
+        .Name("upload")
+        .Multiple(true)
+        .Async(async =>
+        {
+            async.AutoUpload(true)
+                .Save("UploadedFiles", "ExtendedUsers", new { area = "Administration"});
+        }))

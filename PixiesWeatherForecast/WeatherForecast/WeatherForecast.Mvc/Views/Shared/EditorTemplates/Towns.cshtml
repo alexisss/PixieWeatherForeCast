@@ -1,0 +1,15 @@
+﻿@using WeatherForecast.Mvc.Models
+@model TownViewModel
+@using Kendo.Mvc.UI;
+@(Html.Kendo().DropDownListFor(e => e)
+.DataSource(data =>
+    {
+        data.Read("GetAllTowns", "Forecasts");
+        data.ServerFiltering(true);
+    })
+.DataTextField("Name")
+.DataValueField("TownId")
+    .Name("Town")
+    .AutoBind(true)
+        /*.HtmlAttributes(new { style="width:auto" })*/)
+@*if auto not given, the control takes up the whole space*@

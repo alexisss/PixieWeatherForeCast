@@ -1,0 +1,39 @@
+﻿@using WeatherForecast.Mvc.ViewModels;
+@model ForecastVM
+
+@{
+    ViewBag.Title = "View Forecast Details";
+}
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<h2> Forecast for area @Model.AreaName > town @Model.TownName</h2>
+<h3> Date @Model.Date.ToString("dd/MM/yyyy")</h3>
+<h3>by @Html.ActionLink(@Model.AuthorName, "AuthorDetails", "Authors", new { username = @Model.AuthorName }, null) </h3>
+<div>
+
+    @(Html.Kendo().Grid<ForecastValuesVM>(Model.Values)
+    .Name("grid-values")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.DayPart);
+        columns.Bound(c => c.Temperature);
+        columns.Bound(c => c.WindSpeed);
+        columns.Bound(c => c.Pressure);
+        columns.Bound(c => c.RainProbability);
+        columns.Bound(c => c.State);
+    }))
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.Partial("Vote", Model.Vote)
+    }
+</div>
+
+<script>
+    function onFailure(data) {
+        console.error(data);
+    }
+
+    function onSuccess(data) {
+        console.log(data);
+    }
+</script>
+

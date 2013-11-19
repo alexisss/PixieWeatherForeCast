@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20827.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherForecast.Models", "WeatherForecast.Models\WeatherForecast.Models.csproj", "{B9FF5245-EAE7-43BA-B8AD-525A07607D57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherForecast.Mvc", "WeatherForecast.Mvc\WeatherForecast.Mvc.csproj", "{42BD4FE8-6CB9-438E-860F-9C6E26F63567}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherForecast.Data", "WeatherForecast.Data\WeatherForecast.Data.csproj", "{6D839065-429C-4A55-B76E-E86D7342364B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherForecast.Test", "WeatherForecast.Test\WeatherForecast.Test.csproj", "{8BC2D967-F8E9-474C-AE82-EACE97413AD5}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs36
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = WeatherForecast.Data\\WeatherForecast.Data.csproj
+		SccProjectName1 = WeatherForecast.Data
+		SccLocalPath1 = WeatherForecast.Data
+		SccProjectUniqueName2 = WeatherForecast.Models\\WeatherForecast.Models.csproj
+		SccProjectName2 = WeatherForecast.Models
+		SccLocalPath2 = WeatherForecast.Models
+		SccProjectUniqueName3 = WeatherForecast.Mvc\\WeatherForecast.Mvc.csproj
+		SccProjectName3 = WeatherForecast.Mvc
+		SccLocalPath3 = WeatherForecast.Mvc
+		SccProjectUniqueName4 = WeatherForecast.Test\\WeatherForecast.Test.csproj
+		SccProjectName4 = WeatherForecast.Test
+		SccLocalPath4 = WeatherForecast.Test
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9FF5245-EAE7-43BA-B8AD-525A07607D57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9FF5245-EAE7-43BA-B8AD-525A07607D57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9FF5245-EAE7-43BA-B8AD-525A07607D57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9FF5245-EAE7-43BA-B8AD-525A07607D57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42BD4FE8-6CB9-438E-860F-9C6E26F63567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42BD4FE8-6CB9-438E-860F-9C6E26F63567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42BD4FE8-6CB9-438E-860F-9C6E26F63567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42BD4FE8-6CB9-438E-860F-9C6E26F63567}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D839065-429C-4A55-B76E-E86D7342364B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D839065-429C-4A55-B76E-E86D7342364B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D839065-429C-4A55-B76E-E86D7342364B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D839065-429C-4A55-B76E-E86D7342364B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BC2D967-F8E9-474C-AE82-EACE97413AD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BC2D967-F8E9-474C-AE82-EACE97413AD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BC2D967-F8E9-474C-AE82-EACE97413AD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BC2D967-F8E9-474C-AE82-EACE97413AD5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

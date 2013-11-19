@@ -1,0 +1,67 @@
+﻿@model WeatherForecast.Models.Forecast
+@using WeatherForecast.Mvc.Models;
+@section JavaScript
+{
+    <script type="text/javascript" src="@Url.Content("/Scripts/HomeScripts.js")"></script>
+}
+<div class="areas-towns-dropdown" style="width: 250px;">
+    <label for="areas">Areas:</label>
+ 
+    @(Html.Kendo().DropDownList()
+          .Name("areas")
+          .HtmlAttributes(new { style = "width: 250px" })
+          .OptionLabel("Select area...")
+          .DataTextField("Name")
+          .DataValueField("Id")
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("GetAreas", "Home");
+              });
+          })
+    )
+
+    <label for="towns">Towns:</label>
+    @(Html.Kendo().DropDownList()
+              .Name("towns")
+              .HtmlAttributes(new { style = "width:300px" })
+              .OptionLabel("Select town...")
+              .Events(e => e.Change("townChanged"))
+              .DataTextField("Name")
+              .DataValueField("Id")
+              .DataSource(source =>
+              {
+                  source.Read(read =>
+                  {
+                      read.Action("GetCascadeTowns", "Home")
+                          .Data("filterTowns");
+                  })
+                  .ServerFiltering(true);
+              })
+              .Enable(false)
+              .AutoBind(false)
+              .CascadeFrom("areas")
+    )
+    </div>
+    <script>
+        function filterTowns() {
+            return {
+                areas: $("#areas").val()
+            };
+        }
+    </script>
+    <style scoped>
+        .areas-towns-dropdown {
+            width: 460px;
+            padding: 30px;
+        }
+
+            .areas-towns-dropdown .k-button {
+                margin: 20px 0 0 125px;
+            }
+
+        .k-readonly {
+            color: gray;
+        }
+    </style>

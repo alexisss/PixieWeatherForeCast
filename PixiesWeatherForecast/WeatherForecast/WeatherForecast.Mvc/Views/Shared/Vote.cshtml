@@ -1,0 +1,24 @@
+﻿@model WeatherForecast.Mvc.ViewModels.VoteVM
+
+<div id="votes-count">
+    Votes @Model.VotesCount
+</div>
+@if (Model.CanVoteUp)
+{
+    @(Ajax.ActionLink("Up", "Vote", "Votes",
+    new { id = Model.ForecastId, value = "1" },
+    new AjaxOptions
+        {
+            OnSuccess = "HideVoteButton",
+           UpdateTargetId="votes-count"
+        },
+        new { @class = "btn", id="vote-btn"}))
+}
+
+
+<script>
+    function HideVoteButton() {
+        $("#vote-btn").hide();
+    }
+
+</script>

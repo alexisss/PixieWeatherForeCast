@@ -1,0 +1,6 @@
+﻿@(Html.Kendo().DatePicker()
+                    .Name("Date").Format("MM/dd/yyyy")
+                .HtmlAttributes(new { style = "width:auto" })
+                .Min(DateTime.Now.AddDays(1))
+                .Max(DateTime.Now.AddDays(10))
+)

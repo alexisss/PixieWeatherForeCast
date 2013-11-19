@@ -1,0 +1,67 @@
+﻿@model ICollection<WeatherForecast.Mvc.Models.AuthorViewModel>
+
+@{
+    ViewBag.Title = "All Authors";
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<h2>@ViewBag.Title</h2>
+
+
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
+
+
+@(Html.Kendo().AutoComplete()
+          .Name("authors")
+          .DataTextField("UserName")
+          .Filter("contains")
+          .BindTo(Model)
+          .MinLength(2)
+          .HtmlAttributes(new { style = "width:250px" })
+          .Events
+          (
+          ev =>
+          {
+              ev.Select("selectAuthor");
+          }
+          )
+)
+
+@if (Model != null && Model.Count() > 0)
+{
+    <ul>
+        @foreach (var author in Model)
+        {
+            <li>
+                <span>Username: </span>
+                <a href="/Authors/AuthorDetails?username=@author.UserName"> @author.UserName </a>
+                <span>Rating:</span>@author.Rating
+                <img src="@(Url.Content("~/img/account/" + author.ProfilePictureUrl))" class="img-polaroid" width="40" height="50" />
+            </li>
+        }
+    </ul>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+<script>
+    function onAdditionalData() {
+        return {
+            text: $("#authors").val()
+        };
+    }
+
+    function selectAuthor(e) {
+        var username = e.item[0].innerText;
+
+        location = "/Authors/AuthorDetails?username=" + username;
+    }
+</script>

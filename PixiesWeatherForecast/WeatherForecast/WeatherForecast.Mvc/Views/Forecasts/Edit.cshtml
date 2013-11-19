@@ -1,0 +1,63 @@
+﻿@using WeatherForecast.Mvc.ViewModels;
+@model ForecastVM
+
+@{
+    ViewBag.Title = "Edit Forecast Details";
+}
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<h2>@ViewBag.Title</h2>
+
+<div>
+    @using (Ajax.BeginForm("UpdateForecatst", new AjaxOptions
+    {
+        OnFailure = "onFailure",
+        OnSuccess = "onSuccess"
+    }))
+    {
+        @Html.DropDownListFor(m => m.TownId, (IEnumerable<SelectListItem>)ViewBag.TownsList, new { id="drop-down-list-towns"})
+        <br />
+        @(Html.Kendo()
+            .DatePickerFor(m => m.Date)
+            .Min(DateTime.Now.AddDays(1))
+            .Max(DateTime.Now.AddDays(10)))
+        @(Html.HiddenFor(m => m.Id, new { id = "forecastId" }))
+        <br />
+        <input type="submit" value="Update" />
+    }
+    @(Html.Kendo().Grid<ForecastValuesVM>(Model.Values)
+    .Name("grid-values")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.DayPart);
+        columns.Bound(c => c.Temperature);
+        columns.Bound(c => c.WindSpeed);
+        columns.Bound(c => c.Pressure);
+        columns.Bound(c => c.RainProbability);
+        columns.Bound(c => c.State);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Save();
+    })
+    .Editable(edit => edit.Mode(GridEditMode.InCell))
+    .DataSource(data =>
+        data.Ajax()
+        .Batch(true)
+        .Model(model =>
+            {
+                model.Id(f => f.Id);
+                model.Field(f => f.DayPart).Editable(false);
+            })
+        .Update("UpdateValues", "Forecasts")
+    ))
+</div>
+
+<script>
+    function onFailure(data) {
+        console.error(data);
+    }
+
+    function onSuccess(data) {
+        console.error(data);
+    }
+</script>

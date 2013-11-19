@@ -1,0 +1,119 @@
+﻿@using Microsoft.AspNet.Identity;
+@model WeatherForecast.Mvc.Models.ExtendedAuthorViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<h2>@ViewBag.Title</h2>
+
+<h3>@Model.FirstName @Model.LastName 's Forecasts</h3>
+
+@if (User.IsInRole("Author"))
+{
+    using (Ajax.BeginForm("TogleUser", "Authors", new AjaxOptions
+    {
+        HttpMethod = "Post",
+        OnSuccess = "onTogleUserSuccess"
+    }))
+    {
+        @Html.Hidden("username", Model.AuthorId);
+        <input type="submit" value='@(Model.IsAuthor ? "Demote Author" : "Promote User")' id="togleUserButton"/>
+    }
+}
+
+@(Html.Kendo()
+        .Grid<WeatherForecast.Mvc.Models.ForecastViewModel>()
+    .Name("grid-forecasts")
+    .Columns(columns =>
+    {
+        columns.Bound(model => model.ForecastId);
+        columns.Bound(model => model.Date).Width(250).Format("{0: dd-MM-yyyy}").EditorTemplateName("DatePicker");
+        columns.Bound(m => m.TownName).EditorTemplateName("Towns");
+        columns.Command(command =>
+            {
+                command.Edit();
+                command.Destroy();
+                command.Custom("Details").Click("selectRowEdit").SendDataKeys(true).SendState(true);
+            }).Visible((bool)ViewBag.CanEdit);
+        columns.Command(command =>
+        {
+            command.Custom("Details").Click("selectRowView");
+        }).Visible(!((bool)ViewBag.CanEdit));
+
+
+    })
+    .ToolBar(tool =>
+    {
+        if ((bool)ViewBag.CanEdit)
+        {
+            tool.Create();
+        }
+        //tool.Create().HtmlAttributes(((bool)ViewBag.CanEdit ? new { style = "display:block;" } : new { style = "display:none;" }));
+    })
+    .Pageable(page =>
+        {
+            page.PreviousNext(true);
+            page.Numeric(true);
+        })
+    .Sortable(sort =>
+        {
+            sort.AllowUnsort(false);
+            sort.SortMode(GridSortMode.SingleColumn);
+        })
+        .Selectable()
+    .Groupable()
+    .Filterable()
+    .Navigatable()
+    .Editable(edit =>
+        {
+            edit.Mode(GridEditMode.InLine);
+        })
+    .DataSource(data =>
+    {
+        data.Ajax()
+             .Model(model =>
+             {
+                 model.Id(f => f.ForecastId);
+             })
+            .PageSize(10)
+            .ServerOperation(true)
+            .Events(ev => ev.Error("errorAlert"))
+            .Read("GetForecasts", "Forecasts", new { Username = @Model.UserName })
+            .Update("UpdateForecast", "Forecasts")
+            .Destroy("DestroyForecast", "Forecasts")
+            .Create("CreateForecast", "Forecasts");
+    }))
+
+
+<script>
+    function selectRowEdit() {
+        var selectedItem = this.select();
+        var selectedId = selectedItem[0].cells[0].innerText;
+
+        location = "/Forecasts/Edit/" + selectedId
+    }
+
+    function selectRowView() {
+        var selectedItem = this.select();
+        var selectedId = selectedItem[0].cells[0].innerText;
+
+        location = "/Forecasts/View/" + selectedId
+    }
+
+    function errorAlert() {
+        console.log("An error ocurred");
+    }
+
+    function onTogleUserSuccess(data) {
+        debugger;
+        var buttonText = data == "True" ? "Demote Author" : "Promote User";
+        $('#togleUserButton').val(buttonText);
+    }
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+

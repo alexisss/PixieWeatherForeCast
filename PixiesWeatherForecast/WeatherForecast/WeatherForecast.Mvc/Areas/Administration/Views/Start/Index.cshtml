@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Welcome to the Admin Panel</h2>
+
+<input type="button" id="towns" value="Towns" class="btn btn-info" />
+<input type="button" id="areas" value="Areas" class="btn btn-info" />
+<input type="button" id="users" value="Users" class="btn btn-info" />
+
+<script>
+    $(document).ready(function () {
+        $('#towns').on('click', function () {
+            location = "../Administration/Towns";
+        });
+    })
+
+
+    $(document).ready(function () {
+        $('#areas').on('click', function () {
+            location = "../Administration/Areas";
+        });
+    })
+
+    $(document).ready(function () {
+        $('#users').on('click', function () {
+            location = "../Administration/ExtendedUsers";
+        });
+    })
+</script>

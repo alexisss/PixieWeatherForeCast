@@ -1,0 +1,35 @@
+@using Microsoft.AspNet.Identity
+@using WeatherForecast.Mvc.Controllers
+@using WeatherForecast.Models
+@using WeatherForecast.Data
+
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", new { area= ""}, FormMethod.Post, new {id = "logoutForm", @class = "navbar-form pull-right" }))
+    {
+    @Html.AntiForgeryToken()
+            
+        UowData context = new UowData();
+        string userId = User.Identity.GetUserId();
+
+        ExtendedUser user = context.Users.All().Where(u => u.Id == userId).FirstOrDefault();
+        
+    <ul class="nav">
+        <li><img src="@(Url.Content("~/img/account/" + user.PictureUrl))" alt="image" style="width:30px; height:30px; margin-top:10px;" /></li>
+        <li>            
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", new { area = "" }, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    
+   
+    }
+}
+else
+{
+    <ul class="nav pull-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", area = "" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", area = "" })</li>
+    </ul>
+}

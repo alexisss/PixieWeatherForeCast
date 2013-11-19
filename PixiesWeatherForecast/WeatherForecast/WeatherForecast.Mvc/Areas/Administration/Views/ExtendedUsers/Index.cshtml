@@ -1,0 +1,80 @@
+﻿@using WeatherForecast.Mvc.Areas.Administration.ViewModels
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    /*Batch Edit Mode*/
+    .k-edit-cell input {
+        width: 100%;
+    }
+
+    /*InLine Edit Mode*/
+    .k-grid-edit-row input {
+        width: 100px;
+    }
+</style>
+
+
+<h2>All Users</h2>
+
+@(Html.Kendo()
+    .Grid<AdminExtendedUser>()
+    .Name("grid-towns")
+    .Columns(columns =>
+    {
+        columns.Bound(model => model.Id).Width(10);
+        columns.Bound(model => model.UserName).Width(10);
+        columns.Bound(model => model.FirstName);
+        columns.Bound(model => model.LastName);
+        columns.Bound(model => model.Description);
+        columns.Bound(model => model.PictureUrl).EditorTemplateName("UploadPicture");
+        columns.Command(command =>
+            {
+                command.Custom("Details").Click("selectRow");
+                command.Edit();
+                command.Destroy();
+            });
+    })
+    .ToolBar(tool =>
+        {
+            tool.Create();
+        })
+    .Pageable(page =>
+        {
+            page.PreviousNext(true);
+            page.Numeric(true);
+        })
+    .Sortable(sort =>
+        {
+            sort.AllowUnsort(false);
+            sort.SortMode(GridSortMode.SingleColumn);
+        })
+       .Groupable()         
+        .Filterable()
+        .Resizable(resize => resize.Columns(true))
+        .Navigatable()
+        .Editable(edit =>
+                {
+                    edit.Mode(GridEditMode.InLine);
+                })
+    .Selectable(select => select.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+    .DataSource(data =>
+    {
+        data.Ajax()
+            .Model(m => m.Id(b => b.Id))
+            .PageSize(10)
+            .ServerOperation(true)
+            .Read("ReadUsers", "ExtendedUsers")
+            .Create("CreateUsers", "ExtendedUsers")
+            .Update("EditUsers", "ExtendedUsers")
+            .Destroy("DeleteUsers", "ExtendedUsers");
+    }))
+
+<script>
+    function selectRow() {
+        var row = this.select();
+        var username = row[0].cells[1].innerText;
+        location = "/Authors/AuthorDetails?username=" + username;
+    }
+</script>

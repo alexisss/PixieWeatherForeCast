@@ -1,0 +1,5 @@
+﻿@using WeatherForecast.Models
+@model WeatherForecast.Models.ExtendedUser
+
+@Url.Content("~/img/account/" + Model.PictureUrl)
+<img src='@(Url.Content("~/img/account/" + Model.PictureUrl))' alt="image" style="width:30px; height:30px; margin-top:10px;" />

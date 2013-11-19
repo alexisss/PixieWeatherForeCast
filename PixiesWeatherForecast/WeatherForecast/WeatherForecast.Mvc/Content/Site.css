@@ -1,0 +1,42 @@
+﻿body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+    background-image: url(http://www.jally.de/pages/wallpaper/bilder/landschaften/blue-sky-himmel-wallpaper.jpg);
+    background-size:cover;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+ }
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+
+hr { display: block; height: 1px;
+    border: 0; border-top: 1px solid gray;
+    margin: 1em 0; padding: 0; }
+
+/* styles for removing the background from form */
+.no-color {
+  /*background-color: white;*/
+  /*border-style:none;*/
+}
